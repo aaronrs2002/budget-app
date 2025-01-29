@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/brands.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/solid.css" rel="stylesheet" />
+    <link href="https://bootswatch.com/5/spacelab/bootstrap.css" rel="stylesheet" id="themedStyle">
+    <link rel="stylesheet" href="https://aaronrs2002.github.io/black-jack/css/animate.min.css" />
+
+    <link href="https://aaronrs2002.github.io/black-jack/css/shared.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://aaronrs2002.github.io/task-master/css/style.css" />
+    <link href="css/style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <title>Budget</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JJWFFXF8G0"></script>
+    <script>
+        const urlStr = window.location.href;
+        if (urlStr.indexOf("file:///Users/") !== -1 || urlStr.indexOf("exclude") !== -1) {
+            console.log("Not running GA");
+        } else {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-JJWFFXF8G0');
+        }
+    </script>
+
+</head>
+
+<body class="wLogo">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="http://web-presence.biz/?src=itWebApp" target="_blank"><img
+                    src="https://web-presence.biz/img/MA_Logo.png" class="img-fluid" /></a>
+            <button class="navbar-toggler collapsed" onClick="toggleMobileNav('mobileNav')">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse collapse" data-toggle="mobileNav">
+                <ul class="navbar-nav me-auto mb-2 ml-5 mb-sm-0" id="navLinkTarget">
+
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Budget for your tasks</h1>
+                <i><small>Below is a buget system. Remember to use the minus character for expenses. The option to save
+                        budgets to a specific task is available. Make as many budgets as your local storage can
+                        hold.</small></i>
+            </div>
+            <div class="col-md-6">
+                <select class="form-control" name="month" onChange="buildList(null)">
+                    <!--{months ? months.map((month, i) => {
+                    return (<option key={i} selected={monthMenu===(i < 9 ? "0" + (i + 1) : (i + 1)) ? "selected" :
+                        false} key={i} value={i < 9 ? "0" + (i + 1) : (i + 1)}>{month} Balance Sheet</option>)
+                    }) : null}-->
+
+                </select>
+
+            </div>
+            <div class="col-md-6">
+                <select class="form-control" name="year" onChange="buildList(null)">
+                    <!-- <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025" selected="selected">2025</option>-->
+
+                </select>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" name="email" class="form-control" placeholder="Email" />
+            </div>
+            <div class="col-md-6">
+
+                <select class="form-control" id="taskTarget" onChange="buildList(null)">
+                    <option value="default">Select task/ticket if available</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+
+
+                <input type="text" class="form-control" placeholder="Add expense or revenue item name"
+                    name="itemName" />
+
+
+
+
+                <!-- <InOutList list={revenueList} direction={"in"} appendToList={appendToList}
+                        removeFromList={removeFromList} applyValues={applyValues} />-->
+            </div>
+
+            <div class="col-md-6">
+
+
+
+                <input type="text" class="form-control"
+                    placeholder="$00.00 numbers only. Use your minus character for expenses" name="itemAmount" />
+
+
+                <!-- <InOutList list={expenseList} direction={"out"} appendToList={appendToList}
+                        removeFromList={removeFromList} applyValues={applyValues} />-->
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-primary btn-block p-1" onClick="appendToList()">
+                    Submit <i class="fas fa-plus-circle"></i> or <i class="fas fa-minus-circle"></i>
+                </button>
+
+            </div>
+            <div class="col-md-6">
+                <h1>Revenue</h1>
+                <ul id="revenueTarget" class="list-group"></ul>
+
+
+            </div>
+
+            <div class="col-md-6">
+                <h1>Expenses</h1>
+                <ul id="expenseTarget" class="list-group"></ul>
+
+            </div>
+
+            <div class="col-md-12 mb-5">
+                <h3>Balance: $<span id="balanceTarget">0.00</span></h3>
+            </div>
+
+            <!--start monthly itemized list-->
+            <div class="col-md-4">
+                <h3>{title} List A</h3>
+
+                <ul class="list-group">
+                    <!-- {dataA !== [] ? dataA.map((item, i) => {
+                    return (<button key={i} type="button" onClick={()=> seperateData(item.itemName, item.amount, "A")}
+                        class="list-group-item list-group-item-action">{item.itemName + " : $" +
+                        item.amount}</button>)
+                    }) : null}-->
+                </ul>
+                <ul class="list-unstyled">
+                    <!--  {dataBTotal !== 0 ? <li>Total: ${aTotal}</li> : null}
+                    {initialAmount ? <li>Initial Amount: ${initialAmount} </li> : null}-->
+                </ul>
+
+            </div>
+            <div class="col-md-4">
+                <h3>{title} List B</h3>
+                <ul class="list-group">
+
+                    <!--{dataB.length > 0 ? dataB.map((item, i) => {
+                    return (<button key={i} type="button" onClick={()=> seperateData(item.itemName, item.amount, "B")}
+                        class="list-group-item list-group-item-action">{item.itemName + " : $" +
+                        item.amount}</button>)
+                    }) : null}
+-->
+                </ul>
+                <ul class="list-unstyled">
+                    <li>Total: ${(bTotal).toFixed(2)}</li>
+
+                </ul>
+
+            </div>
+            <div class="col-md-4">
+                <!--    {Number(dataBTotal) && Number(dataATotal) ?
+                <MonthIncomeItemized amounts={[Number(dataATotal), Number(dataBTotal)]} labels={[title + " List A" ,
+                    title + " List B" ]} /> : null}-->
+            </div>
+        </div>
+    </div>
+
+    <div class="hide alert fadeInUp" role="alert" id="globalAlert"></div>
+    <footer class="footer mt-auto py-3 animated fadeInUp">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="btn-group block my-2" role="group" id="gameLinks"></div>
+                </div>
+                <div class="col-md-2 my-2"> <select class="form-control" onChange="changeTheme()" id="themes"></select>
+                </div>
+                <div class="col-md-4" id="socialList">
+                </div>
+                <div class="col-md-2 my-3" id="year"></div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="https://aaronrs2002.github.io/task-master/js/sharedFunctionality.js"></script>
+<script src="https://aaronrs2002.github.io/black-jack/js/footer.js"></script>
+<script src="js/Validate.js"></script>
+<script src="js/analyze.js"></script>
+<!--<script src="js/monthlyIncomeItemized.js"></script>-->
+
+<script src="js/functionality.js"></script>
+
+</html>
