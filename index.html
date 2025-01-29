@@ -59,7 +59,8 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Budget for your tasks</h1>
-                <i><small>Below is a buget system. Remember to use the minus character for expenses. The option to save
+                <i><small>Below is a buget system. Remember to use the "Revenue" to add monetary value and select the
+                        "Expense" to submit the loss of monetary value. The option to save
                         budgets to a specific task is available. Make as many budgets as your local storage can
                         hold.</small></i>
             </div>
@@ -101,6 +102,15 @@
                 </select>
             </div>
 
+            <div class="col-md-12">
+                <div class="btn-group form-control" role="group">
+                    <button data-button="plus" onClick="plusMinus('plus')"
+                        class="btn btn-secondary active">Revenue</button>
+
+                    <button data-button="minus" onClick="plusMinus('minus')" class="btn btn-secondary">Expense</button>
+                </div>
+            </div>
+
             <div class="col-md-6">
 
 
@@ -118,8 +128,8 @@
 
 
 
-                <input type="text" class="form-control"
-                    placeholder="$00.00 numbers only. Use your minus character for expenses" name="itemAmount" />
+                <input type="text" class="form-control" placeholder="Your add adding mode." data-plusminus="plus"
+                    name="itemAmount" />
 
 
                 <!-- <InOutList list={expenseList} direction={"out"} appendToList={appendToList}

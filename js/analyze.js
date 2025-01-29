@@ -137,7 +137,13 @@ const appendToList = () => {
     let itemId = timeStamp() + ":" + email + ":" + taskAssigned;
 
     let itemName = document.querySelector("input[name='itemName']").value;
-    let itemAmount = document.querySelector("input[name='itemAmount']").value;
+    let tempPlusMinus = "";
+    console.log("document.querySelector(input[name = 'itemAmount']).dataset.plusminus: " + document.querySelector("input[name='itemAmount']").dataset.plusminus)
+    if (document.querySelector("input[name='itemAmount']").dataset.plusminus === "minus") {
+        tempPlusMinus = "-";
+    }
+
+    let itemAmount = Number(tempPlusMinus + document.querySelector("input[name='itemAmount']").value);
 
     budgetData = [];
     if (localStorage.getItem(email + ":BUDGET:" + document.getElementById("taskTarget").value)) {
@@ -163,6 +169,20 @@ if (localStorage.getItem("emailBudget")) {
 }
 
 
-
+const plusMinus = (which) => {
+    document.querySelector("[name='itemAmount']").dataset.plusminus = which;
+    let plusMinusMessage = "Your add adding mode.";
+    if (which === 'minus') {
+        plusMinusMessage = "Your add subtracting mode.";
+    }
+    document.querySelector("[ name='itemAmount']").setAttribute("placeholder", plusMinusMessage)
+    if (which === "plus") {
+        document.querySelector("[data-button='minus']").classList.remove("active");
+        document.querySelector("[data-button='plus']").classList.add("active");
+    } else {
+        document.querySelector("[data-button='minus']").classList.add("active");
+        document.querySelector("[data-button='plus']").classList.remove("active");
+    }
+}
 
 buildTaskMenu();
