@@ -48,6 +48,7 @@ let dataLocation = "local";
 
 const buildList = (data) => {
     Validate(["email"]);
+    let prepObj = [];
     if (document.querySelector(".error")) {
         globalAlert("alert-warning", "Please fill out your email.");
         return false;
@@ -55,42 +56,38 @@ const buildList = (data) => {
     document.getElementById("expenseTarget").innerHTML = "";
     document.getElementById("revenueTarget").innerHTML = "";
     localStorage.setItem("lastBudgetTask", document.getElementById("taskTarget").value);
-    console.log("data: " + JSON.stringify(data))
+
     if (!data) {
         let searchfor = localStorage.getItem(document.querySelector("[name='email']").value + ":BUDGET:" + document.getElementById("taskTarget").value);
-        console.log("searchfor: " + searchfor)
+
         data = JSON.parse(searchfor);
     }
-    console.log("after: " + JSON.stringify(data))
+
 
     let balance = 0;
     let expenseListHTML = "";
     let revenueListHTML = "";
     let whichMonth = document.querySelector("[name='month']").value;
     let whichYear = document.querySelector("[name='year']").value;
+
+    console.log("data.length: " + data.length);
+
+    if (data.length === undefined) {
+        prepObj.push(data);
+        data = prepObj;
+    }
     try {
-
-
         for (let i = 0; i < data.length; i++) {
-
             if (data[i].itemId.substring(0, 7) === whichYear + "-" + whichMonth) {
-
-
-
                 if (data[i].itemAmount < 0) {
-
                     expenseAmounts.push(data[i].itemAmount);
                     expenseLabels.push(data[i].itemName);
-                    //revenueTarget
                     expenseListHTML = expenseListHTML + `<li class="list-group-item list-group-item-danger"><button class="btn btn-danger btn-sm" onClick="removeItem('${i}')"><i class="far fa-trash-alt"></i></button> ${data[i].itemName}: $${data[i].itemAmount} </li>`;
-
 
                 } else {
                     revenueAmounts.push(data[i].itemAmount);
                     revenueLabels.push(data[i].itemName);
                     revenueListHTML = revenueListHTML + `<li class="list-group-item list-group-item-success"><button class="btn btn-danger btn-sm"  onClick="removeItem('${i}')"><i class="far fa-trash-alt"></i></button> ${data[i].itemName}: $${data[i].itemAmount} </li>`;
-
-
                 }
                 let pennies = data[i].itemAmount * 100;
                 let penniesBalance = balance * 100;
@@ -105,6 +102,7 @@ const buildList = (data) => {
     document.getElementById("revenueTarget").innerHTML = revenueListHTML;
 
 }
+
 
 const removeItem = (whichItem) => {
     let tempBudgetData = [];
@@ -138,7 +136,7 @@ const appendToList = () => {
 
     let itemName = document.querySelector("input[name='itemName']").value;
     let tempPlusMinus = "";
-    console.log("document.querySelector(input[name = 'itemAmount']).dataset.plusminus: " + document.querySelector("input[name='itemAmount']").dataset.plusminus)
+
     if (document.querySelector("input[name='itemAmount']").dataset.plusminus === "minus") {
         tempPlusMinus = "-";
     }
@@ -146,11 +144,16 @@ const appendToList = () => {
     let itemAmount = Number(tempPlusMinus + document.querySelector("input[name='itemAmount']").value);
 
     budgetData = [];
+    let prepObj = [];
     if (localStorage.getItem(email + ":BUDGET:" + document.getElementById("taskTarget").value)) {
         budgetData = JSON.parse(localStorage.getItem(email + ":BUDGET:" + document.getElementById("taskTarget").value));
+        if (budgetData.length === undefined) {
+            prepObj.push(budgetData);
+            budgetData = prepObj;
+        }
     }
 
-    budgetData = [...budgetData, { itemId, itemName, itemAmount }];
+    budgetData.push({ itemId, itemName, itemAmount });
     // localStorage.setItem("budgetData", JSON.stringify(budgetData));
     localStorage.setItem(email + ":BUDGET:" + document.getElementById("taskTarget").value, JSON.stringify(budgetData));
     buildList(budgetData);
