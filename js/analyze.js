@@ -171,9 +171,9 @@ if (localStorage.getItem("emailBudget")) {
 
 const plusMinus = (which) => {
     document.querySelector("[name='itemAmount']").dataset.plusminus = which;
-    let plusMinusMessage = "REVENUE: Your in adding mode. ";
+    let plusMinusMessage = "REVENUE: You're in adding mode. ";
     if (which === 'minus') {
-        plusMinusMessage = "EXPENSE: Your in subtracting mode.";
+        plusMinusMessage = "EXPENSE: You're in subtracting mode.";
     }
     document.querySelector("[ name='itemAmount']").setAttribute("placeholder", plusMinusMessage)
     if (which === "plus") {
