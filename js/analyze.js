@@ -132,12 +132,12 @@ const appendToList = () => {
     if (document.getElementById("taskTarget").value !== "default") {
         taskAssigned = document.getElementById("taskTarget").value;
     }
-    let itemId = timeStamp() + ":" + email + ":" + taskAssigned;
+    let itemId = timeStamp() + ":" + email + ":" + taskAssigned;/*miltiple items share itemId. this is how you know where they belong*/
 
     let itemName = document.querySelector("input[name='itemName']").value;
     let tempPlusMinus = "";
 
-    if (document.querySelector("input[name='itemAmount']").dataset.plusminus === "minus") {
+    if (document.querySelector("input[name='itemAmount']").dataset.plusminus === "minus") {/*place a negative symbol in front of expenses*/
         tempPlusMinus = "-";
     }
 
@@ -162,7 +162,9 @@ const appendToList = () => {
 
 }
 
-if (localStorage.getItem("emailBudget")) {
+
+
+if (localStorage.getItem("emailBudget")) {/*see if there is a saved previuos email*/
     email = localStorage.getItem("emailBudget");
     document.querySelector("[name='email']").value = email;
     if (localStorage.getItem(localStorage.getItem("emailBudget") + ":BUDGET:" + document.getElementById("taskTarget").value)) {
@@ -174,7 +176,7 @@ if (localStorage.getItem("emailBudget")) {
 
 const plusMinus = (which) => {
     document.querySelector("[name='itemAmount']").dataset.plusminus = which;
-    let plusMinusMessage = "REVENUE: You're in adding mode. ";
+    let plusMinusMessage = "REVENUE: You're in adding mode.";
     if (which === 'minus') {
         plusMinusMessage = "EXPENSE: You're in subtracting mode.";
     }
@@ -188,4 +190,4 @@ const plusMinus = (which) => {
     }
 }
 
-buildTaskMenu();
+buildTaskMenu();/*shared functinality from the task master for task menu population*/
