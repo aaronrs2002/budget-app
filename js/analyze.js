@@ -70,7 +70,7 @@ const buildList = (data) => {
     let whichMonth = document.querySelector("[name='month']").value;
     let whichYear = document.querySelector("[name='year']").value;
 
-    console.log("data.length: " + data.length);
+    //console.log("data.length: " + data.length);
 
     if (data.length === undefined) {
         prepObj.push(data);
