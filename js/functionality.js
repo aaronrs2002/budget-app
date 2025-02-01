@@ -4,16 +4,23 @@ let windowH = window.innerHeight;
 let windowW = window.innerWidth;
 let email = "your@email.com";
 let budgetData = [];
-
+let currentMonth = timeStamp().substring(5, 7);
+console.log("timeStamp().substring(5,7): " + timeStamp().substring(5, 7) + " - currentMonth: " + currentMonth);
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 //const monthsNum = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 let monthsHTML = "";
+
 for (let i = 0; i < months.length; i++) {
     let monthNum = i + 1;
+    let selectedMo = "";
+
     if (monthNum < 10) {
         monthNum = "0" + monthNum;
     }
-    monthsHTML = monthsHTML + "<option value='" + monthNum + "'>" + months[i] + "</option>";
+    if (currentMonth === monthNum) {
+        selectedMo = " selected "
+    }
+    monthsHTML = monthsHTML + "<option value='" + monthNum + "' " + selectedMo + ">" + months[i] + "</option>";
 }
 
 [].forEach.call(document.querySelectorAll("[name='month']"), (e) => {
@@ -47,6 +54,8 @@ let yearMenu = "2022";
 let dataLocation = "local";
 
 const buildList = (data) => {
+
+
     Validate(["email"]);
     let prepObj = [];
     if (document.querySelector(".error")) {
@@ -70,7 +79,6 @@ const buildList = (data) => {
     let whichMonth = document.querySelector("[name='month']").value;
     let whichYear = document.querySelector("[name='year']").value;
 
-    //console.log("data.length: " + data.length);
 
     if (data.length === undefined) {
         prepObj.push(data);
@@ -94,6 +102,7 @@ const buildList = (data) => {
                 balance = (pennies + penniesBalance) / 100;
             }
         }
+        console.log("JSON.stringify(data): " + JSON.stringify(data));
     } catch (error) {
         console.log("No data yet: " + error);
     }
@@ -156,6 +165,8 @@ const appendToList = () => {
     budgetData.push({ itemId, itemName, itemAmount });
     // localStorage.setItem("budgetData", JSON.stringify(budgetData));
     localStorage.setItem(email + ":BUDGET:" + document.getElementById("taskTarget").value, JSON.stringify(budgetData));
+
+    console.log("JSON.stringify(budgetData): " + JSON.stringify(budgetData));
     buildList(budgetData);
     document.querySelector("input[name='itemName']").value = "";
     document.querySelector("input[name='itemAmount']").value = "";
@@ -189,5 +200,6 @@ const plusMinus = (which) => {
         document.querySelector("[data-button='plus']").classList.remove("active");
     }
 }
+
 
 buildTaskMenu();/*shared functinality from the task master for task menu population*/
