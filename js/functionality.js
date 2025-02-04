@@ -54,7 +54,11 @@ let yearMenu = "2022";
 let dataLocation = "local";
 
 const buildList = (data) => {
-
+    document.getElementById("listATarget").innerHTML = "";
+    document.getElementById("listBTarget").innerHTML = "";
+    document.getElementById("analyzeTotal").innerHTML = 0;
+    document.getElementById("listATotal").innerHTML = "$0";
+    document.getElementById("listBTotal").innerHTML = "$0";
 
     Validate(["email"]);
     let prepObj = [];
@@ -62,11 +66,7 @@ const buildList = (data) => {
         globalAlert("alert-warning", "Please fill out your email.");
         return false;
     }
-    document.getElementById("listATarget").innerHTML = "";
-    document.getElementById("listBTarget").innerHTML = "";
-    document.getElementById("analyzeTotal").innerHTML = 0;
-    document.getElementById("listATotal").innerHTML = "$0";
-    document.getElementById("listBTotal").innerHTML = "$0";
+
     document.getElementById("expenseTarget").innerHTML = "";
     document.getElementById("revenueTarget").innerHTML = "";
     localStorage.setItem("lastBudgetTask", document.getElementById("taskTarget").value);
@@ -133,7 +133,7 @@ const buildList = (data) => {
         document.getElementById("analyzeTotal").innerHTML = listATotal.toFixed(2);
         document.getElementById("listATotal").innerHTML = listATotal.toFixed(2);
 
-        updatePie([{ amounts: revenueAmounts, labels: revenueLabels }], [{ amounts: expenseAmounts, labels: expenseLabels }]);
+        updatePie([{ amounts: revenueAmounts, labels: revenueLabels }], [{ amounts: [], labels: [] }]);
 
 
     } catch (error) {
