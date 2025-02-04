@@ -5,7 +5,7 @@ let windowW = window.innerWidth;
 let email = "your@email.com";
 let budgetData = [];
 let currentMonth = timeStamp().substring(5, 7);
-console.log("timeStamp().substring(5,7): " + timeStamp().substring(5, 7) + " - currentMonth: " + currentMonth);
+
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 //const monthsNum = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 let monthsHTML = "";
@@ -62,6 +62,11 @@ const buildList = (data) => {
         globalAlert("alert-warning", "Please fill out your email.");
         return false;
     }
+    document.getElementById("listATarget").innerHTML = "";
+    document.getElementById("listBTarget").innerHTML = "";
+    document.getElementById("analyzeTotal").innerHTML = 0;
+    document.getElementById("listATotal").innerHTML = "$0";
+    document.getElementById("listBTotal").innerHTML = "$0";
     document.getElementById("expenseTarget").innerHTML = "";
     document.getElementById("revenueTarget").innerHTML = "";
     localStorage.setItem("lastBudgetTask", document.getElementById("taskTarget").value);
@@ -72,7 +77,10 @@ const buildList = (data) => {
         data = JSON.parse(searchfor);
     }
 
-
+    revenueLabels = [];
+    expenseLabels = [];
+    expenseAmounts = [];
+    revenueAmounts = [];
     let balance = 0;
     let expenseListHTML = "";
     let revenueListHTML = "";
@@ -85,30 +93,56 @@ const buildList = (data) => {
         data = prepObj;
     }
     try {
+        let listATotal = 0;
         for (let i = 0; i < data.length; i++) {
+
             if (data[i].itemId.substring(0, 7) === whichYear + "-" + whichMonth) {
                 if (data[i].itemAmount < 0) {
-                    expenseAmounts.push(data[i].itemAmount);
-                    expenseLabels.push(data[i].itemName);
-                    expenseListHTML = expenseListHTML + `<li class="list-group-item list-group-item-danger"><button class="btn btn-danger btn-sm" onClick="removeItem('${i}')"><i class="far fa-trash-alt"></i></button> ${data[i].itemName}: $${data[i].itemAmount} </li>`;
+                    if (expenseLabels.indexOf(data[i].itemName) === -1) {
+                        expenseAmounts.push(data[i].itemAmount);
+                        expenseLabels.push(data[i].itemName);
+                        expenseListHTML = expenseListHTML + `<li class="list-group-item list-group-item-danger"><button class="btn btn-danger btn-sm" onClick="removeItem('${i}')"><i class="far fa-trash-alt"></i></button> ${data[i].itemName}: $${data[i].itemAmount} </li>`;
+
+
+
+
+
+                    }
 
                 } else {
-                    revenueAmounts.push(data[i].itemAmount);
-                    revenueLabels.push(data[i].itemName);
-                    revenueListHTML = revenueListHTML + `<li class="list-group-item list-group-item-success"><button class="btn btn-danger btn-sm"  onClick="removeItem('${i}')"><i class="far fa-trash-alt"></i></button> ${data[i].itemName}: $${data[i].itemAmount} </li>`;
+                    if (revenueLabels.indexOf(data[i].itemName) === -1) {
+                        revenueAmounts.push(data[i].itemAmount);
+                        revenueLabels.push(data[i].itemName);
+                        revenueListHTML = revenueListHTML + `<li class="list-group-item list-group-item-success"><button class="btn btn-danger btn-sm"  onClick="removeItem('${i}')"><i class="far fa-trash-alt"></i></button> ${data[i].itemName}: $${data[i].itemAmount} </li>`;
+                        //listA
+                        let newRevenue = data[i].itemAmount * 100
+
+                        listATotal = listATotal * 100;
+                        listATotal = (newRevenue + listATotal) / 100;
+                    }
                 }
                 let pennies = data[i].itemAmount * 100;
                 let penniesBalance = balance * 100;
                 balance = (pennies + penniesBalance) / 100;
+
+
+
             }
         }
-        console.log("JSON.stringify(data): " + JSON.stringify(data));
+
+        document.getElementById("analyzeTotal").innerHTML = listATotal.toFixed(2);
+        document.getElementById("listATotal").innerHTML = listATotal.toFixed(2);
+
+        updatePie([{ amounts: revenueAmounts, labels: revenueLabels }], [{ amounts: expenseAmounts, labels: expenseLabels }]);
+
+
     } catch (error) {
         console.log("No data yet: " + error);
     }
     document.getElementById("balanceTarget").innerHTML = parseFloat(balance).toFixed(2);
     document.getElementById("expenseTarget").innerHTML = expenseListHTML;
     document.getElementById("revenueTarget").innerHTML = revenueListHTML;
+
 
 }
 
@@ -166,7 +200,7 @@ const appendToList = () => {
     // localStorage.setItem("budgetData", JSON.stringify(budgetData));
     localStorage.setItem(email + ":BUDGET:" + document.getElementById("taskTarget").value, JSON.stringify(budgetData));
 
-    console.log("JSON.stringify(budgetData): " + JSON.stringify(budgetData));
+
     buildList(budgetData);
     document.querySelector("input[name='itemName']").value = "";
     document.querySelector("input[name='itemAmount']").value = "";
@@ -190,16 +224,45 @@ const plusMinus = (which) => {
     let plusMinusMessage = "REVENUE: You're in adding mode.";
     if (which === 'minus') {
         plusMinusMessage = "EXPENSE: You're in subtracting mode.";
+        document.querySelector("[data-button='minus']").classList.add("active");
+        document.querySelector("[data-button='plus']").classList.remove("active");
     }
     document.querySelector("[ name='itemAmount']").setAttribute("placeholder", plusMinusMessage)
     if (which === "plus") {
         document.querySelector("[data-button='minus']").classList.remove("active");
         document.querySelector("[data-button='plus']").classList.add("active");
-    } else {
-        document.querySelector("[data-button='minus']").classList.add("active");
-        document.querySelector("[data-button='plus']").classList.remove("active");
     }
+
 }
 
+const analyze = (analyzeWhich) => {
+    if (analyzeWhich === "revenue") {
+        // localStorage.setItem("budgetAmounts", JSON.stringify(revenueAmounts));
+        //localStorage.setItem("budgetLabels", JSON.stringify(revenueLabels));
+        updatePie([{ labels: revenueLabels, amounts: revenueAmounts }], [{ labels: [], amounts: [] }]);
+        document.querySelector("button[data-analyze='revenue']").classList.add("active");
+        document.querySelector("button[data-analyze='expenses']").classList.remove("active");
+    } else {
+        //localStorage.setItem("budgetAmounts", JSON.stringify(expenseAmounts));
+        //localStorage.setItem("budgetLabels", JSON.stringify(expenseLabels));
 
+
+        let tempExpenses = [];
+        for (let i = 0; i < expenseAmounts.length; i++) {
+            expenseAmounts[i] = expenseAmounts[i].toString();
+
+            if (expenseAmounts[i][0] === "-") {
+                expenseAmounts[i] = expenseAmounts[i].substring(1, expenseAmounts[i].length);
+                console.log("new number: " + expenseAmounts[i])
+            } expenseAmounts[i] = Number(expenseAmounts[i])
+        }
+        updatePie([{ labels: expenseLabels, amounts: expenseAmounts }], [{ labels: [], amounts: [] }]);
+        document.querySelector("button[data-analyze='revenue']").classList.add("active");
+        document.querySelector("button[data-analyze='expenses']").classList.remove("active");
+    }
+
+
+}
+
+analyze("revenue");
 buildTaskMenu();/*shared functinality from the task master for task menu population*/

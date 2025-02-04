@@ -159,34 +159,46 @@
                 <h3>Balance: $<span id="balanceTarget">0.00</span></h3>
             </div>
 
-            <!--start monthly itemized list
-            <div class="col-md-4">
-                <h3>{title} List A</h3>
+            <!--start monthly itemized list-->
+            <hr />
+            <h3>Analyse Income and expenses</h3>
+            <div class="col-md-12">
+                <div class="btn-group form-control" role="group">
+                    <button data-analyze="revenue" onClick="analyze('revenue')" class="btn btn-secondary active">Analyze
+                        Revenue</button>
 
-                <ul class="list-group">
-           
-                </ul>
+                    <button data-analyze="expenses" onClick="analyze('expenses')" class="btn btn-secondary">Analyze
+                        Expenses</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3>Breakdown List A - originally: $<span id="analyzeTotal"></span></h3>
+
+                <div class="list-group" id="listATarget">
+
+                </div>
                 <ul class="list-unstyled">
-                  
+                    <li>Total: $<span id="listATotal"></span></li>
+
                 </ul>
 
             </div>
             <div class="col-md-4">
-                <h3>{title} List B</h3>
-                <ul class="list-group">
+                <h3>List B</h3>
+                <div class="list-group" id="listBTarget">
 
-             
 
-                </ul>
+
+                </div>
                 <ul class="list-unstyled">
-                    <li>Total: ${(bTotal).toFixed(2)}</li>
+                    <li>Total: $<span id="listBTotal">0</span></li>
 
                 </ul>
 
             </div>
             <div class="col-md-4">
-        
-            </div>-->
+                <div id="chart"></div>
+            </div>
             <div class="col-md-12 py-1">
 
                 <div class="d-grid gap-2">
@@ -270,7 +282,8 @@
 <script src="https://aaronrs2002.github.io/task-master/js/sharedFunctionality.js"></script>
 
 <script src="js/Validate.js"></script>
+<script src="js/monthlyIncomeItemized.js"></script>
 <script src="js/functionality.js"></script>
-<!--<script src="js/monthlyIncomeItemized.js"></script>-->
+
 
 </html>
