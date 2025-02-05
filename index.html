@@ -163,6 +163,9 @@
             <hr />
             <h3>Analyse Income and expenses</h3>
             <div class="col-md-12">
+                <h3>Breakdown - originally: $<span id="analyzeTotal"></span></h3>
+                <small><i>Select "analyze revenue" or "analyze expenses". Then select items from the list item menu
+                        below to build out the percentages of the item/items chosen.</i></small>
                 <div class="btn-group form-control" role="group">
                     <button data-analyze="revenue" onClick="analyze('revenue')" class="btn btn-secondary active">Analyze
                         Revenue</button>
@@ -172,11 +175,9 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h3>Breakdown List A - originally: $<span id="analyzeTotal"></span></h3>
+                <h3>List A</h3>
 
-                <div class="list-group" id="listATarget">
-
-                </div>
+                <div class="list-group" id="listATarget"></div>
                 <ul class="list-unstyled">
                     <li>Total: $<span id="listATotal"></span></li>
 
