@@ -53,7 +53,9 @@ let monthMenu = "January";
 let yearMenu = "2022";
 let dataLocation = "local";
 
-const buildList = (data) => {
+
+
+const buildList = (data) => {/*BUILDS MAIN BUDGET LIST OF EXPENSES OR REVENUE*/
     document.getElementById("listATarget").innerHTML = "";
     document.getElementById("listBTarget").innerHTML = "";
     document.getElementById("analyzeTotal").innerHTML = 0;
@@ -82,11 +84,11 @@ const buildList = (data) => {
     expenseAmounts = [];
     revenueAmounts = [];
     let balance = 0;
+    let analyzeTotalExpenses = 0;
     let expenseListHTML = "";
     let revenueListHTML = "";
     let whichMonth = document.querySelector("[name='month']").value;
     let whichYear = document.querySelector("[name='year']").value;
-
 
     if (data.length === undefined) {
         prepObj.push(data);
@@ -102,10 +104,10 @@ const buildList = (data) => {
                         expenseAmounts.push(data[i].itemAmount);
                         expenseLabels.push(data[i].itemName);
                         expenseListHTML = expenseListHTML + `<li class="list-group-item list-group-item-danger"><button class="btn btn-danger btn-sm" onClick="removeItem('${i}')"><i class="far fa-trash-alt"></i></button> ${data[i].itemName}: $${data[i].itemAmount} </li>`;
+                        let newExpense = data[i].itemAmount * 100
 
-
-
-
+                        analyzeTotalExpenses = analyzeTotalExpenses * 100;
+                        analyzeTotalExpenses = (newExpense + analyzeTotalExpenses) / 100;
 
                     }
 
@@ -129,7 +131,7 @@ const buildList = (data) => {
 
             }
         }
-
+        document.getElementById("analyzeTotalExpenses").innerHTML = analyzeTotalExpenses.toFixed(2);
         document.getElementById("analyzeTotal").innerHTML = listATotal.toFixed(2);
         document.getElementById("listATotal").innerHTML = listATotal.toFixed(2);
 
@@ -161,6 +163,10 @@ const removeItem = (whichItem) => {
     localStorage.setItem(document.querySelector("[name='email']").value + ":BUDGET:" + document.getElementById("taskTarget").value, JSON.stringify(tempBudgetData));
     buildList(tempBudgetData);
 }
+
+
+
+
 
 const appendToList = () => {
     Validate(["itemName", "itemAmount", "email"]);
@@ -235,19 +241,14 @@ const plusMinus = (which) => {
 
 }
 
+
+
 const analyze = (analyzeWhich) => {
     if (analyzeWhich === "revenue") {
-        // localStorage.setItem("budgetAmounts", JSON.stringify(revenueAmounts));
-        //localStorage.setItem("budgetLabels", JSON.stringify(revenueLabels));
         updatePie([{ labels: revenueLabels, amounts: revenueAmounts }], [{ labels: [], amounts: [] }]);
         document.querySelector("button[data-analyze='revenue']").classList.add("active");
         document.querySelector("button[data-analyze='expenses']").classList.remove("active");
     } else {
-        //localStorage.setItem("budgetAmounts", JSON.stringify(expenseAmounts));
-        //localStorage.setItem("budgetLabels", JSON.stringify(expenseLabels));
-
-
-        let tempExpenses = [];
         for (let i = 0; i < expenseAmounts.length; i++) {
             expenseAmounts[i] = expenseAmounts[i].toString();
 
@@ -260,8 +261,6 @@ const analyze = (analyzeWhich) => {
         document.querySelector("button[data-analyze='revenue']").classList.add("active");
         document.querySelector("button[data-analyze='expenses']").classList.remove("active");
     }
-
-
 }
 
 analyze("revenue");

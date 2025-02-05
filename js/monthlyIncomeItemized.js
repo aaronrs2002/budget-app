@@ -145,6 +145,8 @@ updatePie = (listA, listB) => {
 
         }
         document.getElementById("listATotal").innerHTML = listATotal.toFixed(2);
+
+
     } catch (error) {
         console.log("Nothing in listA: " + error)
     }
@@ -159,6 +161,7 @@ updatePie = (listA, listB) => {
 
         }
         document.getElementById("listBTotal").innerHTML = listBTotal.toFixed(2);
+
     } catch (error) {
 
         console.log("Nothing in listB: " + error)
