@@ -181,7 +181,11 @@ const appendToList = () => {
     if (document.getElementById("taskTarget").value !== "default") {
         taskAssigned = document.getElementById("taskTarget").value;
     }
-    let itemId = timeStamp() + ":" + email + ":" + taskAssigned;/*miltiple items share itemId. this is how you know where they belong*/
+
+    let entryDate = document.querySelector("[name='year']").value + "-" + document.querySelector("[name='month']").value + "-" + timeStamp().substring(8, 10);
+    console.log("entryDate: " + entryDate)
+
+    let itemId = entryDate + ":" + email + ":" + taskAssigned;/*miltiple items share itemId. this is how you know where they belong*/
 
     let itemName = document.querySelector("input[name='itemName']").value;
     let tempPlusMinus = "";
