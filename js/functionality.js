@@ -191,6 +191,7 @@ const appendToList = () => {
     let tempPlusMinus = "";
 
     if (document.querySelector("input[name='itemAmount']").dataset.plusminus === "minus") {/*place a negative symbol in front of expenses*/
+
         tempPlusMinus = "-";
     }
 
@@ -236,11 +237,13 @@ const plusMinus = (which) => {
         plusMinusMessage = "EXPENSE: You're in subtracting mode.";
         document.querySelector("[data-button='minus']").classList.add("active");
         document.querySelector("[data-button='plus']").classList.remove("active");
+        document.getElementById("plusMinusBt").innerHTML = "Submit Expense <i class='fas fa-minus-circle'></i>";
     }
     document.querySelector("[ name='itemAmount']").setAttribute("placeholder", plusMinusMessage)
     if (which === "plus") {
         document.querySelector("[data-button='minus']").classList.remove("active");
         document.querySelector("[data-button='plus']").classList.add("active");
+        document.getElementById("plusMinusBt").innerHTML = "Submit Revenue <i class='fas fa-plus-circle'></i>";
     }
 
 }
