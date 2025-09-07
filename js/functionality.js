@@ -175,7 +175,7 @@ const appendToList = () => {
         return false;
     }
     if (document.querySelector("input[name='itemAmount']").value.indexOf("-") !== -1) {
-        globalAlert("alert-warning", "No minus symbol please.");
+        globalAlert("alert-warning", "No need to use minus symbol.");
         return false;
     }
     email = document.querySelector("[name='email']").value;
