@@ -174,6 +174,10 @@ const appendToList = () => {
         globalAlert("alert-warning", "Your form needs more information.");
         return false;
     }
+    if (document.querySelector("input[name='itemAmount']").value.indexOf("-") !== -1) {
+        globalAlert("alert-warning", "No minus symbol please.");
+        return false;
+    }
     email = document.querySelector("[name='email']").value;
     localStorage.setItem("emailBudget", email);
 
