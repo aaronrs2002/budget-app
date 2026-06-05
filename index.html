@@ -53,208 +53,220 @@
 
 
     <div class="container">
+        <div class="card">
+            <div class="card-body">
 
 
-
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Budget for your tasks</h1>
-                <i><small>Below is a buget system. Remember to use the "Revenue" to add monetary value and select the
-                        "Expense" to submit the loss of monetary value. The option to save
-                        budgets to a specific task is available. Make as many budgets as your local storage can
-                        hold.</small></i>
-            </div>
-            <div class="col-md-6">
-                <select class="form-control" name="month" onChange="buildList(null)">
-                    <!--{months ? months.map((month, i) => {
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Budget for your tasks</h1>
+                        <i><small>Below is a buget system. Remember to use the "Revenue" to add monetary value and
+                                select the
+                                "Expense" to submit the loss of monetary value. The option to save
+                                budgets to a specific task is available. Make as many budgets as your local storage can
+                                hold.</small></i>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control" name="month" onChange="buildList(null)">
+                            <!--{months ? months.map((month, i) => {
                     return (<option key={i} selected={monthMenu===(i < 9 ? "0" + (i + 1) : (i + 1)) ? "selected" :
                         false} key={i} value={i < 9 ? "0" + (i + 1) : (i + 1)}>{month} Balance Sheet</option>)
                     }) : null}-->
 
-                </select>
+                        </select>
 
-            </div>
-            <div class="col-md-6">
-                <select class="form-control" name="year" onChange="buildList(null)">
-                    <!-- <option value="2021">2021</option>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control" name="year" onChange="buildList(null)">
+                            <!-- <option value="2021">2021</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
                     <option value="2024">2024</option>
                     <option value="2025" selected="selected">2025</option>-->
 
-                </select>
-            </div>
-        </div>
-
-
-
-
-
-
-        <div class="row">
-            <div class="col-md-6">
-                <input type="text" name="email" class="form-control" placeholder="Email" />
-            </div>
-            <div class="col-md-6">
-
-                <select class="form-control" id="taskTarget" onChange="buildList(null)">
-                    <option value="default">Select task/ticket if available</option>
-                </select>
-            </div>
-
-            <div class="col-md-12">
-                <div class="btn-group form-control" role="group">
-                    <button data-button="plus" onClick="plusMinus('plus')" class="btn btn-secondary active">Revenue
-                        Mode</button>
-
-                    <button data-button="minus" onClick="plusMinus('minus')" class="btn btn-secondary">Expense
-                        Mode</button>
+                        </select>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-6">
-
-                <label>Item Name</label>
-                <input type="text" class="form-control" placeholder="Add expense or revenue item name"
-                    name="itemName" />
 
 
 
 
-                <!-- <InOutList list={revenueList} direction={"in"} appendToList={appendToList}
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" name="email" class="form-control" placeholder="Email" />
+                    </div>
+                    <div class="col-md-6">
+
+                        <select class="form-control" id="taskTarget" onChange="buildList(null)">
+                            <option value="default">Select task/ticket if available</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="btn-group form-control" role="group">
+                            <button data-button="plus" onClick="plusMinus('plus')"
+                                class="btn btn-secondary active">Revenue
+                                Mode</button>
+
+                            <button data-button="minus" onClick="plusMinus('minus')" class="btn btn-secondary">Expense
+                                Mode</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label>Item Name</label>
+                        <input type="text" class="form-control" placeholder="Add expense or revenue item name"
+                            name="itemName" />
+
+
+
+
+                        <!-- <InOutList list={revenueList} direction={"in"} appendToList={appendToList}
                         removeFromList={removeFromList} applyValues={applyValues} />-->
-            </div>
+                    </div>
 
-            <div class="col-md-6">
-
-
-                <label>Item Value</label>
-
-                <input type="text" class="form-control" placeholder="REVENUE: You're in adding mode."
-                    data-plusminus="plus" name="itemAmount" />
+                    <div class="col-md-6">
 
 
-                <!-- <InOutList list={expenseList} direction={"out"} appendToList={appendToList}
+                        <label>Item Value</label>
+
+                        <input type="text" class="form-control" placeholder="REVENUE: You're in adding mode."
+                            data-plusminus="plus" name="itemAmount" />
+
+
+                        <!-- <InOutList list={expenseList} direction={"out"} appendToList={appendToList}
                         removeFromList={removeFromList} applyValues={applyValues} />-->
-            </div>
+                    </div>
 
-            <div class="col-md-12">
-                <button class="btn btn-primary btn-block p-1" id="plusMinusBt" onClick="appendToList()">
-                    Submit Revenue <i class='fas fa-plus-circle'></i>
-                </button>
+                    <div class="col-md-12">
+                        <button class="btn btn-primary btn-block p-1" id="plusMinusBt" onClick="appendToList()">
+                            Submit Revenue <i class='fas fa-plus-circle'></i>
+                        </button>
 
-            </div>
-            <div class="col-md-6">
-                <h1>Revenue</h1>
-                <ul id="revenueTarget" class="list-group"></ul>
-
-
-            </div>
-
-            <div class="col-md-6">
-                <h1>Expenses</h1>
-                <ul id="expenseTarget" class="list-group"></ul>
-
-            </div>
-
-            <div class="col-md-12 mb-5">
-                <h3>Balance: $<span id="balanceTarget">0.00</span></h3>
-            </div>
-
-            <!--start monthly itemized list-->
-            <hr />
-            <h3>Analyse Income and expenses</h3>
-            <div class="col-md-12">
-                <h3>Breakdown - Original Revenue: $<span id="analyzeTotal"></span> Original Expenses: $<span
-                        id="analyzeTotalExpenses"></span></h3>
-                <small><i>Select "analyze revenue" or "analyze expenses". Then select items from the list item menu
-                        below to build out the percentages of the item/items chosen.</i></small>
-                <div class="btn-group form-control" role="group">
-                    <button data-analyze="revenue" onClick="analyze('revenue')" class="btn btn-secondary active">Analyze
-                        Revenue</button>
-
-                    <button data-analyze="expenses" onClick="analyze('expenses')" class="btn btn-secondary">Analyze
-                        Expenses</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h3>Series-1</h3>
-
-                <div class="list-group" id="listATarget"></div>
-                <ul class="list-unstyled">
-                    <li>Total: $<span id="listATotal"></span></li>
-
-                </ul>
-
-            </div>
-            <div class="col-md-4">
-                <h3>Series-2</h3>
-                <div class="list-group" id="listBTarget">
+                    </div>
+                    <div class="col-md-6">
+                        <h1>Revenue</h1>
+                        <ul id="revenueTarget" class="list-group"></ul>
 
 
+                    </div>
 
-                </div>
-                <ul class="list-unstyled">
-                    <li>Total: $<span id="listBTotal">0</span></li>
+                    <div class="col-md-6">
+                        <h1>Expenses</h1>
+                        <ul id="expenseTarget" class="list-group"></ul>
 
-                </ul>
+                    </div>
 
-            </div>
-            <div class="col-md-4">
-                <div id="chart"></div>
-            </div>
-            <div class="col-md-12 py-1">
+                    <div class="col-md-12 mb-5">
+                        <h3>Balance: $<span id="balanceTarget">0.00</span></h3>
+                    </div>
 
-                <div class="d-grid gap-2">
-                    <button class="btn btn-info" onClick="javascript:toggle('info')" type="button"
-                        data-toggle="default">View
-                        Information</button>
-                    <button class="btn btn-info hide" onClick="javascript:toggle('default')" type="button"
-                        data-toggle="info">Hide
-                        Information</button>
-                </div>
+                    <!--start monthly itemized list-->
+                    <hr />
+                    <h3>Analyse Income and expenses</h3>
+                    <div class="col-md-12">
+                        <h3>Breakdown - Original Revenue: $<span id="analyzeTotal"></span> Original Expenses: $<span
+                                id="analyzeTotalExpenses"></span></h3>
+                        <small><i>Select "analyze revenue" or "analyze expenses". Then select items from the list item
+                                menu
+                                below to build out the percentages of the item/items chosen.</i></small>
+                        <div class="btn-group form-control" role="group">
+                            <button data-analyze="revenue" onClick="analyze('revenue')"
+                                class="btn btn-secondary active">Analyze
+                                Revenue</button>
 
-                <div class="card hide" data-toggle="info" id="info">
-                    <div class="card-body  text-left">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h2>JavaScript Finance Analysis App | Budget Tracker with ApexCharts Visualization</h2>
-                                <hr>
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-6"><iframe
-                                                style="width: 100%; height: auto; min-height: 270px;"
-                                                src="https://www.youtube.com/embed/f5M9lV9K5QA"
-                                                title="YouTube video player" frameborder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowfullscreen=""></iframe></div>
-                                        <div class="col-md-6">
-                                            <p>In this video, I showcase my JavaScript budget analyzer web app, which
-                                                helps users create multiple budgets and analyze
-                                                income vs. expenses with percentage breakdowns. I walk through the app's
-                                                functionality, demonstrating how to track
-                                                finances efficiently. After that, I dive into the JavaScript source
-                                                code, explaining how it works piece by piece.</p>
+                            <button data-analyze="expenses" onClick="analyze('expenses')"
+                                class="btn btn-secondary">Analyze
+                                Expenses</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Series-1</h3>
+
+                        <div class="list-group" id="listATarget"></div>
+                        <ul class="list-unstyled">
+                            <li>Total: $<span id="listATotal"></span></li>
+
+                        </ul>
+
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Series-2</h3>
+                        <div class="list-group" id="listBTarget">
 
 
 
-                                            <p>See the code. Check back for updates:<br>
-                                                <a href="https://github.com/aaronrs2002/budget-app"
-                                                    target="_blank">https://github.com/aaronrs2002/budget-app</a>
-                                            </p>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li>Total: $<span id="listBTotal">0</span></li>
+
+                        </ul>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div id="chart"></div>
+                    </div>
+                    <div class="col-md-12 py-1">
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-info" onClick="javascript:toggle('info')" type="button"
+                                data-toggle="default">View
+                                Information</button>
+                            <button class="btn btn-info hide" onClick="javascript:toggle('default')" type="button"
+                                data-toggle="info">Hide
+                                Information</button>
+                        </div>
+
+                        <div class="card hide" data-toggle="info" id="info">
+                            <div class="card-body  text-left">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2>JavaScript Finance Analysis App | Budget Tracker with ApexCharts
+                                            Visualization</h2>
+                                        <hr>
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-6"><iframe
+                                                        style="width: 100%; height: auto; min-height: 270px;"
+                                                        src="https://www.youtube.com/embed/f5M9lV9K5QA"
+                                                        title="YouTube video player" frameborder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowfullscreen=""></iframe></div>
+                                                <div class="col-md-6">
+                                                    <p>In this video, I showcase my JavaScript budget analyzer web app,
+                                                        which
+                                                        helps users create multiple budgets and analyze
+                                                        income vs. expenses with percentage breakdowns. I walk through
+                                                        the app's
+                                                        functionality, demonstrating how to track
+                                                        finances efficiently. After that, I dive into the JavaScript
+                                                        source
+                                                        code, explaining how it works piece by piece.</p>
+
+
+
+                                                    <p>See the code. Check back for updates:<br>
+                                                        <a href="https://github.com/aaronrs2002/budget-app"
+                                                            target="_blank">https://github.com/aaronrs2002/budget-app</a>
+                                                    </p>
 
 
 
 
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
 
+
+
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
