@@ -67,6 +67,11 @@
                                 hold.</small></i>
                     </div>
                     <div class="col-md-6">
+                        <select class="form-control" name="emailOptions" onChange="addUser()">
+
+                        </select>
+                    </div>
+                    <div class="col-md-3">
                         <select class="form-control" name="month" onChange="buildList(null)">
                             <!--{months ? months.map((month, i) => {
                     return (<option key={i} selected={monthMenu===(i < 9 ? "0" + (i + 1) : (i + 1)) ? "selected" :
@@ -76,7 +81,7 @@
                         </select>
 
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <select class="form-control" name="year" onChange="buildList(null)">
                             <!-- <option value="2021">2021</option>
                     <option value="2022">2022</option>

@@ -276,3 +276,5 @@ const analyze = (analyzeWhich) => {
 
 analyze("revenue");
 buildTaskMenu();/*shared functinality from the task master for task menu population*/
+
+
